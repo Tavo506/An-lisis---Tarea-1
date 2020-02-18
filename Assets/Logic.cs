@@ -54,11 +54,11 @@ public class Logic : MonoBehaviour
             {
                 arr[i] = Random.Range(1, 1000);
             }
-            DateTime tiempo1 = DateTime.Now;
+            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+            sw.Start();
             QuickSort(arr, 0, arr.Length - 1);
-            DateTime tiempo2 = DateTime.Now;
-            TimeSpan tiempo = new TimeSpan(tiempo2.Ticks - tiempo1.Ticks);
-            Debug.Log(tiempo.ToString());
+            Debug.Log(sw.Elapsed.TotalMilliseconds);
+
             //for (int i = 0; i < arr.Length; i++)
             //Debug.Log(arr[i]);
             Debug.Log("--------------" + n + "--------------");
@@ -69,13 +69,13 @@ public class Logic : MonoBehaviour
     {
         int t;
         for (int n = 2; n <= LIM; n++) {
-            //Debug.Log(tomarTiempo);
             int[] a = new int[n];
             for (int i = 0; i < n; i++)
             {
                 a[i] = Random.Range(1, 1000);
             }
-            DateTime tiempo1 = DateTime.Now;
+            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+            sw.Start();
             for (int p = 0; p <= a.Length - 2; p++)
             {
                 for (int i = 0; i <= a.Length - 2; i++)
@@ -88,11 +88,9 @@ public class Logic : MonoBehaviour
                     }
                 }
             }
-            DateTime tiempo2 = DateTime.Now;
-            TimeSpan tiempo = new TimeSpan(tiempo2.Ticks - tiempo1.Ticks);
-            Debug.Log(tiempo.ToString());
+            Debug.Log(sw.Elapsed.TotalMilliseconds);
             //foreach (int aa in a)
-                //Debug.Log(aa + " ");
+            //Debug.Log(aa + " ");
             Debug.Log("--------------" + n + "--------------");
 
         }
