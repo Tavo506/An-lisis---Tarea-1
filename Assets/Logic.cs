@@ -8,9 +8,7 @@ using Random = UnityEngine.Random;
 public class Logic : MonoBehaviour
 {
 
-    private double tiempo;
-    public bool tomarTiempo = true;
-    private int LIM = 20;
+    private int LIM = 500;
     private void QuickSort(int[] arr, int start, int end)
     {
         int i;
@@ -48,7 +46,6 @@ public class Logic : MonoBehaviour
 
     public void Quick()     //http://csharpexamples.com/c-quick-sort-algorithm-implementation/
     {
-        tomarTiempo = true;
         
         for (int n = 2; n <= LIM; n++)
         {
@@ -57,19 +54,19 @@ public class Logic : MonoBehaviour
             {
                 arr[i] = Random.Range(1, 1000);
             }
-            tiempo = 0;
+            DateTime tiempo1 = DateTime.Now;
             QuickSort(arr, 0, arr.Length - 1);
-            Debug.Log(tiempo.ToString("F2"));
+            DateTime tiempo2 = DateTime.Now;
+            TimeSpan tiempo = new TimeSpan(tiempo2.Ticks - tiempo1.Ticks);
+            Debug.Log(tiempo.ToString());
             //for (int i = 0; i < arr.Length; i++)
             //Debug.Log(arr[i]);
             Debug.Log("--------------" + n + "--------------");
         }
-        tomarTiempo = false;
     }
 
     public void Bubble()    //https://www.w3resource.com/csharp-exercises/searching-and-sorting-algorithm/searching-and-sorting-algorithm-exercise-3.php
     {
-        tomarTiempo = true;
         int t;
         for (int n = 2; n <= LIM; n++) {
             //Debug.Log(tomarTiempo);
@@ -78,7 +75,7 @@ public class Logic : MonoBehaviour
             {
                 a[i] = Random.Range(1, 1000);
             }
-            tiempo = 0;
+            DateTime tiempo1 = DateTime.Now;
             for (int p = 0; p <= a.Length - 2; p++)
             {
                 for (int i = 0; i <= a.Length - 2; i++)
@@ -91,21 +88,15 @@ public class Logic : MonoBehaviour
                     }
                 }
             }
-            Debug.Log((tiempo).ToString("F2"));
+            DateTime tiempo2 = DateTime.Now;
+            TimeSpan tiempo = new TimeSpan(tiempo2.Ticks - tiempo1.Ticks);
+            Debug.Log(tiempo.ToString());
             //foreach (int aa in a)
                 //Debug.Log(aa + " ");
             Debug.Log("--------------" + n + "--------------");
 
         }
-        tomarTiempo = false;
     }
 
-    void Update()
-    {
-        if (tomarTiempo)
-        {
-            tiempo += Time.fixedDeltaTime;
-            Debug.Log("------------------------------------------------------");
-        }
-    }
+
 }
