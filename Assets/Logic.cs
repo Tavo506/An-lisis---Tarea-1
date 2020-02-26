@@ -7,10 +7,10 @@ using Random = UnityEngine.Random;
 
 public class Logic : MonoBehaviour
 {
+    private GameObject esfera;
     public Canvas canvas;
     public Camera camara1, camara2;
     public Image tablaQuick, tablaBubble;
-
     private static int LIM = 5000, START = 500;
     public ArrayList tiemposQuick, tiemposBubble;
 
@@ -51,21 +51,25 @@ public class Logic : MonoBehaviour
 
     public void Quick()     //http://csharpexamples.com/c-quick-sort-algorithm-implementation/
     {
+        int contador = 1;
         tiemposQuick = new ArrayList();
         for (int n = START; n <= LIM; n += 250)
         {
             
             int[] arr = new int[n];
-            for (int i = 0; i < n; i++)
+            for (int i = 0; i < n; i++) //Obtiene los valores aleatorios para la lista
             {
                 arr[i] = Random.Range(1, 1000);
             }
+
             System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
             sw.Start();
             QuickSort(arr, 0, arr.Length - 1);
             double tiempo = sw.Elapsed.TotalMilliseconds;
-            Debug.Log(tiempo);
+            //Debug.Log(tiempo);
             tiemposQuick.Add(tiempo);
+            colocarQuick(contador, tiempo);
+            contador++;
 
             //for (int i = 0; i < arr.Length; i++)
             //Debug.Log(arr[i]);
@@ -75,13 +79,16 @@ public class Logic : MonoBehaviour
 
     public void Bubble()    //https://www.w3resource.com/csharp-exercises/searching-and-sorting-algorithm/searching-and-sorting-algorithm-exercise-3.php
     {
+        int contador = 1;
         tiemposBubble = new ArrayList();
         int t;
+
         for (int n = START; n <= LIM; n += 250) {
+
             int[] a = new int[n];
-            for (int i = 0; i < n; i++)
+            for (int i = 0; i < n; i++) //Obtiene los valores aleatorios para la lista
             {
-                a[i] = Random.Range(1, 1000);
+                a[i] = Random.Range(1, 1000);   
             }
             System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
             sw.Start();
@@ -98,8 +105,10 @@ public class Logic : MonoBehaviour
                 }
             }
             double tiempo = sw.Elapsed.TotalMilliseconds;
-            Debug.Log(tiempo);
-            tiemposBubble.Add(tiempo);
+            //Debug.Log(tiempo);
+            tiemposBubble.Add(tiempo);  
+            colocarBubble(contador, tiempo);
+            contador++;
             //foreach (int aa in a)
             //Debug.Log(aa + " ");
             Debug.Log("--------------" + n + "--------------");
@@ -120,18 +129,25 @@ public class Logic : MonoBehaviour
     {
         Quick();
         Bubble();
-
-        colocarQuick();
     }
 
-    void colocarQuick()
+    void colocarQuick(int cantidad, double tiempo)  //Coloca los objetos en la tabla quicksort segun su tiempo
     {
-        GameObject esfera = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        esfera = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         esfera.transform.SetParent(tablaQuick.transform);
-        
-        esfera.transform.localScale = new Vector3(10,10,10);
-        esfera.transform.position = new Vector3(tablaQuick.transform.position.x- 564, tablaQuick.transform.position.y- 253, tablaQuick.transform.position.z);
-        
+
+        esfera.transform.localScale = new Vector3(10, 10, 10);
+        esfera.transform.position = new Vector3(tablaQuick.transform.position.x + (-630 + 65 * cantidad), tablaQuick.transform.position.y + (-244 + (float)(280 * tiempo)), tablaQuick.transform.position.z);
+
     }
-    //-564 -253
+
+    void colocarBubble(int cantidad, double tiempo) //Coloca los objetos en la tabla bubblesort segun su tiempo
+    {
+        esfera = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        esfera.transform.SetParent(tablaBubble.transform);
+
+        esfera.transform.localScale = new Vector3(10, 10, 10);
+        esfera.transform.position = new Vector3(tablaBubble.transform.position.x + (-630 + 65 * cantidad), tablaBubble.transform.position.y + (-244 + (float)(2.5 * tiempo)), tablaBubble.transform.position.z);
+
+    }
 }
